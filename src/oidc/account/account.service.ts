@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../../oauth/user/user.service';
 import { FindAccount } from 'oidc-provider';
-import crypto from 'crypto';
+import * as CryptoJS from 'crypto-js';
+import * as crypto from 'crypto';
+import { AuthDataValidator, urlStrToAuthDataMap } from '@telegram-auth/server';
 
 @Injectable()
 export class AccountService {
@@ -26,23 +28,36 @@ export class AccountService {
     };
   };
 
+  private hashHmacSHA256(plainText: string, secretKey: string): string {
+    const hmac = crypto.createHmac('sha256', secretKey);
+    hmac.update(plainText);
+    const hashedString = hmac.digest('hex');
+    return hashedString;
+  }
+
   async authenticate(user: any) {
-    const { id, firstName, lastName, photoUrl, authDate, hash, username } =
-      user;
-    const dataString = `${id}\n${firstName}\n${lastName}\n${username}\n${photoUrl}\n${authDate}`;
-    const secret = '7523821158:AAF962-Jsj_HzucAqmRVtqsNy0lDakjeF-c';
+    // const { id, firstName, lastName, photoUrl, authDate, hash, username } =
+    //   user;
 
-    const hashBE = crypto
-      .createHmac('sha256', secret)
-      .update(dataString)
-      .digest('hex');
+    // const dataString = `auth_date=<${authDate}>\nfirst_name=<${firstName}>\nid=<${id}?\nusername=<${username}>`;
 
-    const isValid = hash === hashBE;
+    // Tạo query string từ telegramData
+    const queryParams = new URLSearchParams(user);
 
-    console.log('hash', hash);
-    console.log('hashBE', hashBE);
+    // Tạo URL với domain là localhost
+    const url = `http://localhost:4000?${queryParams.toString()}`;
 
-    console.log('isValid', isValid);
+    const data = urlStrToAuthDataMap(url);
+
+    console.log('datadata', data);
+
+    const validator = new AuthDataValidator({
+      botToken: '7523821158:AAF962-Jsj_HzucAqmRVtqsNy0lDakjeF-c',
+    });
+
+    const usercc = await validator.validate(data);
+
+    console.log('usercc', usercc);
 
     // const user = await this.userService.authenticate(email, password);
 
