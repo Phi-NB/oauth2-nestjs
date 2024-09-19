@@ -30,28 +30,30 @@
 
     <script type="text/javascript">
       async function onTelegramAuth(user) {
-        if (user) {
-          const response = await fetch("/login", {
-            method: "POST",
-            headers: { "content-type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              id: encodeURIComponent(user.id),
-              firstName: encodeURIComponent(user.first_name),
-              lastName: encodeURIComponent(user.last_name),
-              photoUrl: encodeURIComponent(user.photo_url),
-              authDate: encodeURIComponent(user.auth_date),
-              hash: encodeURIComponent(user.hash),
-            }),
-          });
+        console.log('user', user);
+        
+        // if (user) {
+        //   const response = await fetch("/login", {
+        //     method: "POST",
+        //     headers: { "content-type": "application/x-www-form-urlencoded" },
+        //     body: new URLSearchParams({
+        //       id: encodeURIComponent(user.id),
+        //       firstName: encodeURIComponent(user.first_name),
+        //       lastName: encodeURIComponent(user.last_name),
+        //       photoUrl: encodeURIComponent(user.photo_url),
+        //       authDate: encodeURIComponent(user.auth_date),
+        //       hash: encodeURIComponent(user.hash),
+        //     }),
+        //   });
 
-          if (response.ok) {
-            // const redirectUrl = await response.text();
-            const redirectUrl = 'https://saw-sso-api-lab.saworld.io/oauth2/authorize?response_type=code&client_id=7298037039:AAFZcLvnViUWmLyVEoVSzyUfGfR0T9kdiJM&redirect_uri=https%3A%2F%2Fsso-dev.saworld.io%2Frealms%2Fsummonersarena%2Fbroker%2Ftelegram%2Fendpoint&scope=openid%20write&state'
-            window.location.href = redirectUrl;
-          } else {
-            console.error("Login failed");
-          }
-        }
+        //   if (response.ok) {
+        //     // const redirectUrl = await response.text();
+        //     const redirectUrl = 'https://saw-sso-api-lab.saworld.io/oauth2/authorize?response_type=code&client_id=7298037039:AAFZcLvnViUWmLyVEoVSzyUfGfR0T9kdiJM&redirect_uri=https%3A%2F%2Fsso-dev.saworld.io%2Frealms%2Fsummonersarena%2Fbroker%2Ftelegram%2Fendpoint&scope=openid%20write&state'
+        //     window.location.href = redirectUrl;
+        //   } else {
+        //     console.error("Login failed");
+        //   }
+        // }
       }
     </script>
   </body>
