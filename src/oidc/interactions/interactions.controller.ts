@@ -66,15 +66,14 @@ export class InteractionsController {
     try {
       const { uid, prompt, params } =
         await this.oidcService.oidc.interactionDetails(req, res);
+
       assert.strictEqual(prompt.name, 'login');
+
       const client = await this.oidcService.oidc.Client.find(
         params.client_id as string,
       );
 
-      const accountId = await this.accountService.authenticate(
-        req.body.email,
-        req.body.password,
-      );
+      const accountId = await this.accountService.authenticate(req.body);
 
       if (!accountId) {
         res.render('login', {

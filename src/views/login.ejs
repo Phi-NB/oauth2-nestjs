@@ -13,12 +13,13 @@
       <% if (flash) { %>
         <p><%= flash %></p>
       <% } %>
-      <form autocomplete="off" action="/interaction/<%= uid %>/login" method="post">
+      <!-- <form autocomplete="off" action="/interaction/<%= uid %>/login" method="post">
         <input required type="email" name="email" placeholder="Enter an email" <% if (!params.login_hint) { %>autofocus="on"<% } else { %> value="<%= params.login_hint %>" <% } %>>
         <input required type="password" name="password" placeholder="and password" <% if (params.login_hint) { %>autofocus="on"<% } %>>
 
         <button type="submit" class="login login-submit">Sign-in</button>
-      </form>
+      </form> -->
+
       <script
         async
         src="https://telegram.org/js/telegram-widget.js?22"
@@ -31,18 +32,45 @@
     <script type="text/javascript">
       async function onTelegramAuth(user) {
         console.log('user', user);
-        
+        try {
+            const response = await fetch('/interaction/<%= uid %>/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  id: user.id,
+                  firstName: user.first_name,
+                  lastName: user.last_name,
+                  photoUrl: user.photo_url,
+                  authDate: user.auth_date,
+                  hash: user.hash,
+                  username: user.username
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Success:', data);
+                // Điều hướng hoặc thông báo cho người dùng
+            } else {
+                console.error('Error:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+
         // if (user) {
         //   const response = await fetch("/login", {
         //     method: "POST",
         //     headers: { "content-type": "application/x-www-form-urlencoded" },
         //     body: new URLSearchParams({
-        //       id: encodeURIComponent(user.id),
-        //       firstName: encodeURIComponent(user.first_name),
-        //       lastName: encodeURIComponent(user.last_name),
-        //       photoUrl: encodeURIComponent(user.photo_url),
-        //       authDate: encodeURIComponent(user.auth_date),
-        //       hash: encodeURIComponent(user.hash),
+              // id: encodeURIComponent(user.id),
+              // firstName: encodeURIComponent(user.first_name),
+              // lastName: encodeURIComponent(user.last_name),
+              // photoUrl: encodeURIComponent(user.photo_url),
+              // authDate: encodeURIComponent(user.auth_date),
+              // hash: encodeURIComponent(user.hash),
         //     }),
         //   });
 
