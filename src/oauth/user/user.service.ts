@@ -79,6 +79,7 @@ export class UserService {
           username: params.username,
           photoUrl: params.photoUrl,
         });
+        return params;
       } catch (error) {
         throw new UnauthorizedException();
       }
