@@ -50,37 +50,41 @@ export class UserService {
   }
 
   async authenticate(params: any) {
-    const user = await this._repo.findOneOrFail(
-      { idTelegram: params.id },
-      {
-        select: [
-          'idTelegram',
-          'firstName',
-          'id',
-          'lastName',
-          'username',
-          'photoUrl',
-        ],
-      },
-    );
+    try {
+      const user = await this._repo.findOneOrFail(
+        { idTelegram: params.id },
+        {
+          select: [
+            'idTelegram',
+            'firstName',
+            'id',
+            'lastName',
+            'username',
+            'photoUrl',
+          ],
+        },
+      );
 
-    if (!user) {
-      try {
-        console.log('123123123');
+      console.log(user);
 
-        console.log('user not found', user);
+      if (!user) {
+        try {
+          console.log('123123123');
 
-        await this._repo.save({
-          idTelegram: params.idTelegram,
-          firstName: params.firstName,
-          lastName: params.lastName,
-          username: params.username,
-          photoUrl: params.photoUrl,
-        });
-      } catch (error) {
-        throw new UnauthorizedException();
+          console.log('user not found', user);
+
+          await this._repo.save({
+            idTelegram: params.idTelegram,
+            firstName: params.firstName,
+            lastName: params.lastName,
+            username: params.username,
+            photoUrl: params.photoUrl,
+          });
+        } catch (error) {
+          throw new UnauthorizedException();
+        }
       }
-    }
-    return params;
+      return params;
+    } catch (error) {}
   }
 }
