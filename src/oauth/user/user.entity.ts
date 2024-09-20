@@ -6,18 +6,33 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: false, type: 'text' })
-  fullName: string;
+  @Column({ nullable: true, type: 'int' })
+  idTelegram: number;
 
   @Column({ nullable: false, type: 'text' })
-  email: string;
+  firstName: string;
 
-  @Column({
-    type: 'text',
-    select: false,
-    nullable: false,
-  })
-  hash: string;
+  @Column({ nullable: false, type: 'text' })
+  lastName: string;
+
+  @Column({ nullable: true, type: 'text' })
+  username: string;
+
+  @Column({ nullable: false, type: 'text' })
+  photoUrl: string;
+
+  // @Column({ nullable: false, type: 'text' })
+  // fullName: string;
+
+  // @Column({ nullable: false, type: 'text' })
+  // email: string;
+
+  // @Column({
+  //   type: 'text',
+  //   select: false,
+  //   nullable: false,
+  // })
+  // hash: string;
 }
 
 export class RegisterUserDto {

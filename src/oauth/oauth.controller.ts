@@ -24,52 +24,52 @@ export class OauthController {
     private oAuthServer: OauthServerService,
   ) {}
 
-  @Post('authorize')
-  @HttpCode(302)
-  @ApiConsumes('application/json')
-  @ApiOperation({
-    description: 'Authorize a client to access user data',
-    summary: 'Authorize',
-    tags: ['OAuth Authorize'],
-  })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        client_id: { type: 'string' },
-        redirect_uri: { type: 'string' },
-        grant_type: { type: 'string' },
-        response_type: { type: 'string' },
-        userEmail: { type: 'string' },
-        userPassword: { type: 'string' },
-      },
-    },
-  })
-  async authorize(
-    @Body() authorizeDto: AuthorizeDto,
-    @Req() request: Request,
-    @Res() response: Response,
-  ) {
-    const user = await this.userService.authenticate(
-      authorizeDto.userEmail,
-      authorizeDto.userPassword,
-    );
-    return this.oAuthServer.server
-      .authorize(new OAuth2Request(request), new OAuth2Response(response), {
-        authenticateHandler: {
-          handle() {
-            Logger.log('User ---');
-            console.log(user);
-            return user;
-          },
-        },
-      })
-      .then((code) => {
-        const redirectUrl = new URL(authorizeDto.redirect_uri);
-        redirectUrl.searchParams.append('code', code.authorizationCode);
-        response.redirect(redirectUrl.toString());
-      });
-  }
+  // @Post('authorize')
+  // @HttpCode(302)
+  // @ApiConsumes('application/json')
+  // @ApiOperation({
+  //   description: 'Authorize a client to access user data',
+  //   summary: 'Authorize',
+  //   tags: ['OAuth Authorize'],
+  // })
+  // @ApiBody({
+  //   schema: {
+  //     type: 'object',
+  //     properties: {
+  //       client_id: { type: 'string' },
+  //       redirect_uri: { type: 'string' },
+  //       grant_type: { type: 'string' },
+  //       response_type: { type: 'string' },
+  //       userEmail: { type: 'string' },
+  //       userPassword: { type: 'string' },
+  //     },
+  //   },
+  // })
+  // async authorize(
+  //   @Body() authorizeDto: AuthorizeDto,
+  //   @Req() request: Request,
+  //   @Res() response: Response,
+  // ) {
+  //   const user = await this.userService.authenticate(
+  //     authorizeDto.userEmail,
+  //     authorizeDto.userPassword,
+  //   );
+  //   return this.oAuthServer.server
+  //     .authorize(new OAuth2Request(request), new OAuth2Response(response), {
+  //       authenticateHandler: {
+  //         handle() {
+  //           Logger.log('User ---');
+  //           console.log(user);
+  //           return user;
+  //         },
+  //       },
+  //     })
+  //     .then((code) => {
+  //       const redirectUrl = new URL(authorizeDto.redirect_uri);
+  //       redirectUrl.searchParams.append('code', code.authorizationCode);
+  //       response.redirect(redirectUrl.toString());
+  //     });
+  // }
 
   @Post('token')
   async token(@Req() request: Request, @Res() response: Response) {

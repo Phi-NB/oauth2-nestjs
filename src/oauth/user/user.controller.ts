@@ -11,8 +11,8 @@ export class UserController {
     return this.userService.register(registerDto);
   }
 
-  @Post('login')
-  login(@Body() loginDto: LoginDto) {
-    return this.userService.authenticate(loginDto.email, loginDto.password);
-  }
+  // @Post('login')
+  // login(@Body() loginDto: LoginDto) {
+  //   return this.userService.authenticate(loginDto.email, loginDto.password);
+  // }
 }
