@@ -6,7 +6,7 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: true, type: 'int' })
+  @Column({ nullable: true, type: 'bigint' })
   idTelegram: number;
 
   @Column({ nullable: false, type: 'text' })
