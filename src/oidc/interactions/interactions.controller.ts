@@ -75,9 +75,6 @@ export class InteractionsController {
 
       const accountId = await this.accountService.authenticate(req.body);
 
-      console.log('accountId', accountId);
-      console.log('prompt', prompt);
-
       if (!accountId) {
         res.render('login', {
           client,
@@ -96,6 +93,8 @@ export class InteractionsController {
       const result = {
         login: { accountId },
       };
+
+      console.log('END login');
 
       await this.oidcService.oidc.interactionFinished(req, res, result, {
         mergeWithLastSubmission: false,
