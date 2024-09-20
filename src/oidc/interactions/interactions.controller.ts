@@ -115,15 +115,20 @@ export class InteractionsController {
         req,
         res,
       );
+
       const {
         prompt: { name, details },
         params,
         session: { accountId },
       } = interactionDetails;
+      console.log('accountId', accountId);
+
       assert.strictEqual(name, 'consent');
 
       let { grantId } = interactionDetails;
       let grant;
+
+      console.log('grantId', grantId);
 
       if (grantId) {
         // we'll be modifying existing grant in existing session
@@ -135,6 +140,8 @@ export class InteractionsController {
           clientId: params.client_id as string,
         });
       }
+
+      console.log('grant', grant);
 
       if (details.missingOIDCScope) {
         grant.addOIDCScope((details.missingOIDCScope as string[]).join(' '));
@@ -162,6 +169,9 @@ export class InteractionsController {
       }
 
       const result = { consent };
+
+      console.log('result', result);
+
       await this.oidcService.oidc.interactionFinished(req, res, result, {
         mergeWithLastSubmission: true,
       });
