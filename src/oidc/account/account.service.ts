@@ -39,16 +39,18 @@ export class AccountService {
 
     const data = urlStrToAuthDataMap(url);
 
-    console.log('datadata', data);
-
     const validator = new AuthDataValidator({
       botToken: '7523821158:AAF962-Jsj_HzucAqmRVtqsNy0lDakjeF-c',
     });
 
     const userValidated = await validator.validate(data);
 
-    const userAuth = await this.userService.authenticate(userValidated);
+    console.log('userValidated', userValidated);
 
-    return userAuth.id;
+    const userAuth = await this.userService.authenticate(user);
+
+    console.log(userAuth);
+
+    return user.id;
   }
 }

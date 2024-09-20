@@ -1,3 +1,3 @@
-git add .
-git commit -m "update"
-git push origin tele
+sudo git add .
+sudo git commit -m "update"
+sudo git push origin tele
