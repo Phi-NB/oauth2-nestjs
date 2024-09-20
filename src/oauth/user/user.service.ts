@@ -66,6 +66,10 @@ export class UserService {
 
     if (!user) {
       try {
+        console.log('123123123');
+
+        console.log('user not found', user);
+
         await this._repo.save({
           idTelegram: params.idTelegram,
           firstName: params.firstName,
