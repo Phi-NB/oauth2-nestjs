@@ -75,6 +75,9 @@ export class InteractionsController {
 
       const accountId = await this.accountService.authenticate(req.body);
 
+      console.log('accountId', accountId);
+      console.log('prompt', prompt);
+
       if (!accountId) {
         res.render('login', {
           client,
@@ -82,7 +85,7 @@ export class InteractionsController {
           details: prompt.details,
           params: {
             ...params,
-            login_hint: req.body.email,
+            // login_hint: req.body.email,
           },
           title: 'Sign-in',
           flash: 'Invalid email or password.',
