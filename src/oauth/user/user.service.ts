@@ -50,6 +50,8 @@ export class UserService {
   }
 
   async authenticate(params: any) {
+    console.log('params', params);
+
     try {
       const user = await this._repo.findOneOrFail(
         { idTelegram: params.id },
@@ -85,6 +87,8 @@ export class UserService {
         }
       }
       return params;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
