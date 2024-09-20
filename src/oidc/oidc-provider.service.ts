@@ -16,7 +16,7 @@ export class OidcProviderService {
   ) {
     this._logger = new Logger('OidcProviderService');
 
-    this._oidc = new Provider(`https://app2.skyvn.top:4000`, {
+    this._oidc = new Provider(`https://app2.skyvn.top`, {
       cookies: {
         keys: this.configService.get('SECURE_KEY').split(':'),
       },
@@ -25,7 +25,7 @@ export class OidcProviderService {
       findAccount: this.accountService.findAccount.bind(this.accountService),
       interactions: {
         url(ctx, interaction) {
-          return `/interaction/${interaction.uid}`;
+          return `https://app2.skyvn.top/interaction/${interaction.uid}`;
         },
       },
       claims: {
