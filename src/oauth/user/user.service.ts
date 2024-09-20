@@ -73,7 +73,7 @@ export class UserService {
       console.log(error);
       try {
         await this._repo.save({
-          idTelegram: params.idTelegram,
+          idTelegram: params.id,
           firstName: params.first_name,
           lastName: params.last_name,
           username: params.username,
