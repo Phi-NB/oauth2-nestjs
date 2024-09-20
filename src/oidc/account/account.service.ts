@@ -35,7 +35,7 @@ export class AccountService {
 
     const queryParams = new URLSearchParams(user);
 
-    const url = `http://localhost:4000?${queryParams.toString()}`;
+    const url = `https://app2.skyvn.top?${queryParams.toString()}`;
 
     const data = urlStrToAuthDataMap(url);
 

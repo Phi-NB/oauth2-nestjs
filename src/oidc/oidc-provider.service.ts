@@ -16,7 +16,7 @@ export class OidcProviderService {
   ) {
     this._logger = new Logger('OidcProviderService');
 
-    this._oidc = new Provider(`http://localhost:4000`, {
+    this._oidc = new Provider(`https://app2.skyvn.top:4000`, {
       cookies: {
         keys: this.configService.get('SECURE_KEY').split(':'),
       },

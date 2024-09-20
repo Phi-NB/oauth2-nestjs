@@ -9,6 +9,9 @@ export class OidcController {
   @All('/*')
   public mountedOidc(@Req() req: Request, @Res() res: Response): void {
     req.url = req.originalUrl.replace('/oidc', '');
+
+    console.log(req.url);
+
     return this._oidcProvider.oidc.callback()(req, res);
   }
 }
