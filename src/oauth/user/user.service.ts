@@ -74,10 +74,10 @@ export class UserService {
       try {
         await this._repo.save({
           idTelegram: params.idTelegram,
-          firstName: params.firstName,
-          lastName: params.lastName,
+          firstName: params.first_name,
+          lastName: params.last_name,
           username: params.username,
-          photoUrl: params.photoUrl,
+          photoUrl: params.photo_url,
         });
         return params;
       } catch (error) {
