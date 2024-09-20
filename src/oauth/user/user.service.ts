@@ -68,27 +68,20 @@ export class UserService {
       );
 
       console.log(user);
-
-      if (!user) {
-        try {
-          console.log('123123123');
-
-          console.log('user not found', user);
-
-          await this._repo.save({
-            idTelegram: params.idTelegram,
-            firstName: params.firstName,
-            lastName: params.lastName,
-            username: params.username,
-            photoUrl: params.photoUrl,
-          });
-        } catch (error) {
-          throw new UnauthorizedException();
-        }
-      }
       return params;
     } catch (error) {
       console.log(error);
+      try {
+        await this._repo.save({
+          idTelegram: params.idTelegram,
+          firstName: params.firstName,
+          lastName: params.lastName,
+          username: params.username,
+          photoUrl: params.photoUrl,
+        });
+      } catch (error) {
+        throw new UnauthorizedException();
+      }
     }
   }
 }
