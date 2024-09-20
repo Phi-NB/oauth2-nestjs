@@ -47,10 +47,10 @@ export class AccountService {
 
     console.log('userValidated', userValidated);
 
-    const userAuth = await this.userService.authenticate(user);
+    const idUserAuth = await this.userService.authenticate(user);
 
-    console.log(userAuth);
+    console.log(idUserAuth);
 
-    return user.id;
+    return idUserAuth;
   }
 }

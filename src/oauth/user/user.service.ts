@@ -67,8 +67,8 @@ export class UserService {
         },
       );
 
-      console.log(user);
-      return params;
+      console.log('user123', user);
+      return user.id;
     } catch (error) {
       console.log(error);
       try {
@@ -79,7 +79,23 @@ export class UserService {
           username: params.username,
           photoUrl: params.photo_url,
         });
-        return params;
+
+        const user = await this._repo.findOneOrFail(
+          { idTelegram: params.id },
+          {
+            select: [
+              'idTelegram',
+              'firstName',
+              'id',
+              'lastName',
+              'username',
+              'photoUrl',
+            ],
+          },
+        );
+        console.log('user1234', user);
+
+        return user.id;
       } catch (error) {
         throw new UnauthorizedException();
       }
